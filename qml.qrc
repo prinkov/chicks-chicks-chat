@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>pages/IndexLogin.qml</file>
+        <file>pages/Login.qml</file>
+        <file>pages/Register.qml</file>
+        <file>js/System.js</file>
+        <file>template/ChiksButton.qml</file>
+        <file>template/ChiksTextField.qml</file>
+        <file>template/ChiksComboBox.qml</file>
+        <file>template/ChiksWindow.qml</file>
+        <file>pages/Chat.qml</file>
+    </qresource>
+</RCC>
