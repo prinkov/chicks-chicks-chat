@@ -153,14 +153,14 @@ hello world 4 hello world 4 hello world 4 hello world 4"; type:"they"}
         delegate : ItemDelegate {
             property bool me: type == "me"
             id: dlg
-            height: txt.height+20
+            height: txt.height + 40
             width :parent.width
             Text {
                 id: txt
                 anchors.left: parent.left
                 anchors.leftMargin: me ? 70 : 15
                 anchors.top: parent.top
-                anchors.topMargin: 10
+                anchors.topMargin: 30
                 anchors.right: parent.right
                 anchors.rightMargin:me ? 15 : 70
                 text:  text1
@@ -168,13 +168,33 @@ hello world 4 hello world 4 hello world 4 hello world 4"; type:"they"}
                 onLinkActivated: Qt.openUrlExternally(link)
                 z: 0
                 Rectangle {
+                    Text {
+                        id: author
+                        text: "Блюмин Семен"
+                        anchors.top: parent.top
+                        anchors.topMargin: 2
+                        anchors.left: parent.left
+                        color: "gray"
+                        anchors.leftMargin: 7
+                    }
+
+                    Rectangle {
+                        color: !me ? "blue" : "#ff00ff"
+                        height: 1
+                        anchors.top: author.bottom
+                        anchors.topMargin: 2
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.leftMargin: 0
+                        anchors.rightMargin: 0
+                    }
                     opacity: 1
                     z: -1
                     anchors.left: parent.left
                     anchors.leftMargin: me ? -20 : -10
                     anchors.right: parent.right
                     anchors.top: parent.top
-                    anchors.topMargin: -5
+                    anchors.topMargin: -25
                     anchors.rightMargin: me ? -10 : -20
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: -5
@@ -183,6 +203,15 @@ hello world 4 hello world 4 hello world 4 hello world 4"; type:"they"}
                     border.color: !me ? "blue" : "#ff00ff"
                     radius: 12
                     border.width: 1
+                    Text {
+                        text: "20:45"
+                        anchors.top: parent.top
+                        anchors.topMargin: 2
+                        anchors.right: parent.right
+                        color: "gray"
+                        anchors.rightMargin: 5
+
+                    }
                 }
             }
         }
