@@ -121,7 +121,7 @@ Item {
 
             maximumLength: maxLength_
             font.pixelSize: System.getPointSize(16)
-            font.family: mainFont.name
+//            font.family: mainFont.name
             echoMode: (typeInput == "password") ? TextInput.Password  : TextInput.Normal
 
             placeholderText : root.placeholderText

@@ -15,7 +15,6 @@ Item {
     property string titleText: qsTr("Заголовок")
     property string messageText: qsTr("Сообщение")
     // true - две кнопки(Да и Нет) , flase - одна (ОК)
-    property bool twoButtons: false
 
     width: rootWindow.width
     height: rootWindow.height
@@ -75,7 +74,7 @@ Item {
             anchors.rightMargin: 40
             anchors.left: parent.left
             anchors.leftMargin: 40
-            font.family: mainFont.name
+//            font.family: mainFont.name
             text: (titleText != "") ? titleText : messageText
             visible: true
             clip: true
@@ -91,15 +90,14 @@ Item {
             anchors.top: title.bottom
             anchors.topMargin: 20
 
-//            anchors.bottom: yes.top
-//            anchors.bottomMargin: 30
+
 
             anchors.right: parent.right
             anchors.rightMargin: 20
 
             anchors.left: parent.left
             anchors.leftMargin: 20
-            font.family: mainFont.name
+//            font.family: mainFont.name
             visible: true
             clip: true
             textFormat: Text.PlainText
@@ -109,43 +107,27 @@ Item {
             text: (titleText != "") ? messageText : ""
         }
 
-        Row{
+        RowLayout{
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 40
             anchors.left: parent.left
-            anchors.leftMargin: twoButtons ? 30 : 70
+            anchors.leftMargin: 70
             anchors.right: parent.right
-            anchors.rightMargin: twoButtons ? 30 : 70
+            anchors.rightMargin: 70
             spacing: 40
 
-            ChiksButton {
-                id: yes
-
-                text: qsTr("Да")
-
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-
-//                anchors.left: parent.left
-//                anchors.leftMargin: 0
-
-                width: rootWindow.width / 4
-                visible: twoButtons
-            }
 
             ChiksButton {
                 id: no
-                text: twoButtons ? qsTr("Нет") : qsTr("OK")
-                width: twoButtons ? rootWindow.width / 4 : rootWindow.width / 3
-//                anchors.right: parent.right
-//                anchors.rightMargin: 0
+                text:  qsTr("OK")
+                width: rootWindow.width / 3
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
-//                anchors.left: twoButtons ? parent.right: parent.left
-//                anchors.leftMargin: twoButtons ? (width + 30) : 0
-                textColor: twoButtons ? "#0038a5" : "#ffffff"
+
+                textColor: "#ffffff"
                 border: true
-                color: twoButtons ? "#ffffff" : "#0038a5"
+                color:  "#0038a5"
                 onClick:{
                     root.visible = false
                 }

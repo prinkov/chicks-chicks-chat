@@ -10,5 +10,8 @@
         <file>template/ChiksComboBox.qml</file>
         <file>template/ChiksWindow.qml</file>
         <file>pages/Chat.qml</file>
+        <file>js/Session.js</file>
+        <file>objects/User.qml</file>
+        <file>pages/Loading.qml</file>
     </qresource>
 </RCC>

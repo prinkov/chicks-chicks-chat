@@ -24,10 +24,7 @@ Item {
 
     signal click();
 
-    FontLoader {
-        id: mainFont
-        source: "qrc:/common/fonts/Roboto-Light.ttf"
-    }
+
 
     MouseArea {
         id: area
@@ -46,7 +43,7 @@ Item {
             color: root.textColor
             text: root.text
             font.pointSize: System.getPointSize(13)
-            font.family: mainFont.name
+//            font.family: mainFont.name
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent

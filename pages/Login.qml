@@ -5,6 +5,10 @@ import QtQuick.Window 2.0
 import QtQml 2.2
 import "../template"
 import "qrc:/js/System.js" as System
+import "../objects"
+
+import xyz.prinkov 1.0
+
 /*
   Страница входа.
 */
@@ -12,8 +16,9 @@ import "qrc:/js/System.js" as System
 Item {
     property string title: "Логин"
     property bool flag: false
-
+    property var load
     // Главная область
+
     Rectangle {
         id: frame
         anchors.fill: parent
@@ -111,7 +116,7 @@ Item {
              Text {
                 id: forgotPswdText
                 font.pixelSize: System.getHeight(12)
-                font.family: mainFont.name
+//                font.family: mainFont.name
                 anchors.verticalCenter: rect.verticalCenter
                 anchors.horizontalCenter: rect.horizontalCenter
                 text: qsTr("Забыли пароль?")
@@ -145,6 +150,7 @@ Item {
     }
 
     function login(login, password) {
+        loading()
         var request = new XMLHttpRequest()
         request.open("POST", "http://localhost/login.php")
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -153,9 +159,11 @@ Item {
             if (request.readyState === XMLHttpRequest.DONE) {
                 if (request.status === 200) {
                     if(request.responseText == "1")
-                        loginResolve()
-                    else
+                        loginResolve(login)
+                    else if(request.responseText == "-1")
                        loginError()
+                    else
+                        connectError()
                 } else {
                     view.yaPosition = "interten connection error"
                 }
@@ -164,19 +172,34 @@ Item {
         request.send(param)
     }
 
-    function loginResolve(message) {
+    function loginResolve(login) {
+        User.nickname = login
         stack.push(Qt.resolvedUrl("qrc:/pages/Chat.qml"))
+        load.stop()
+
     }
 
     function loginError(error) {
-
         msgErr.visible = true
-        msgErr.messageText = User.getLastErrorString()
+        load.stop()
+    }
+
+
+    function connectError(error) {
+        msgErr.messageText = "Проверьте интернет соединение"
+        msgErr.visible = true
+        load.stop()
+
+    }
+
+    function loading() {
+        var component = Qt.createComponent("qrc:/pages/Loading.qml");
+        load = component.createObject(rootWindow);
+        load.start()
     }
 
     ChiksWindow {
         id: msgErr
-        twoButtons: false
         titleText: qsTr("Ошибка входа")
         messageText: "Неверный логин/пароль"
     }

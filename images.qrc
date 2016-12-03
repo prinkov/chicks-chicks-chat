@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/login.png</file>
+        <file>img/password_def.png</file>
+        <file>img/password_hover.png</file>
+        <file>img/logo.png</file>
+        <file>img/exit.png</file>
+        <file>img/drawer.png</file>
+        <file>img/send.png</file>
+        <file>img/file.png</file>
+        <file>img/youmsg.png</file>
+        <file>img/mymsg.png</file>
+        <file>img/load.png</file>
+    </qresource>
+</RCC>

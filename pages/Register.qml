@@ -14,10 +14,7 @@ Item {
     property alias acceptRegText: acceptRegText
     id: reg
 
-    FontLoader {
-        id: mainFont
-        source: "qrc:/common/fonts/Roboto-Light.ttf"
-    }
+
 
     //Для ровного переноса текста
    //clip:true
@@ -49,7 +46,7 @@ Item {
             anchors.rightMargin: 40
             anchors.left: parent.left
             anchors.leftMargin: 40
-            font.family: mainFont.name
+//            font.family: mainFont.name
             text: qsTr("Мы рады видеть Вас в нашем чате")
             visible: true
             textFormat: Text.PlainText
@@ -113,7 +110,7 @@ Item {
             anchors.rightMargin: 40
             anchors.left: parent.left
             anchors.leftMargin: 40
-            font.family: mainFont.name
+//            font.family: mainFont.name
             text: qsTr("")
             visible: true
             textFormat: Text.PlainText
@@ -124,7 +121,6 @@ Item {
 
         ChiksWindow{
             id: msgErr
-            twoButtons: true
             titleText: qsTr("Произошла ошибка!")
             messageText: qsTr("Введенный вами ник уже зарегистрирован в системе. Восстановить пароль?")
         }
@@ -143,7 +139,6 @@ Item {
                 if(pass1.getText() == "" || nickname.getText() == "") {
                     msgErr.titleText = "Ошибка"
                     msgErr.messageText = "Заполните все поля"
-                    msgErr.twoButtons = false
                     msgErr.visible = true
                 } else if(pass1.getText() == pass2.getText())
                     register(nickname.getText(), pass1.getText())
@@ -151,7 +146,6 @@ Item {
                     msgErr.titleText = "Ошибка"
                     msgErr.messageText = "Введенные пароли не совпадают"
                     msgErr.visible = true
-                    msgErr.twoButtons = false
 
                 }
             }
@@ -184,15 +178,13 @@ Item {
         msgErr.titleText = ""
         msgErr.messageText = "Регистрация пройдена, теперь пройдите авторизацию"
         msgErr.visible = true
-        msgErr.twoButtons = false
 
     }
 
     function registerError() {
         msgErr.titleText = "Произошла ошибка!"
-        msgErr.messageText = "Введенный вами ник уже зарегистрирован в системе. Восстановить пароль?"
+        msgErr.messageText = "Введенный вами ник уже зарегистрирован в системе. Попробуйте восстановить пароль"
         msgErr.visible = true
-        msgErr.twoButtons = false
 
     }
 
