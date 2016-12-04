@@ -13,5 +13,6 @@
         <file>js/Session.js</file>
         <file>objects/User.qml</file>
         <file>pages/Loading.qml</file>
+        <file>js/Client.js</file>
     </qresource>
 </RCC>

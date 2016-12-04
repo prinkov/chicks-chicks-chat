@@ -164,8 +164,6 @@ Item {
                        loginError()
                     else
                         connectError()
-                } else {
-                    view.yaPosition = "interten connection error"
                 }
             }
         }

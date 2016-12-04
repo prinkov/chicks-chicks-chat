@@ -8,6 +8,7 @@ import QtGraphicalEffects 1.0
 
 import xyz.prinkov 1.0
 
+import "qrc:/js/Client.js" as Client
 import "../js/System.js" as System
 import "../objects"
 
@@ -16,7 +17,29 @@ import "../template"
 Rectangle{
 
     id: chat
-    anchors.fill: parent
+    property int msgLastId:-1
+    property var  mod: ListModel{
+//        ListElement {text1: "hello world 3"; author:"Semen"; time :"20:50"}
+    property int lastId:0
+    }
+
+    Component.onCompleted: {
+        Client.get(msgLastId)
+    }
+
+    function setMsgLastId(i) {
+       msgLastId = i
+        console.log("msgLastId chaged to " + i)
+    }
+
+    Timer {
+        interval: 3000
+        repeat: true
+        running: true
+        onTriggered: {
+            Client.get(msgLastId)
+        }
+    }
 
     FileDialog {
         id: fileDialog
@@ -138,20 +161,19 @@ Rectangle{
         width: parent.width
         currentIndex: mod.count-1
         spacing: 10
-        model:  ListModel {
-            id: mod
-            ListElement {text1: "hello world"; type: "me"}
-            ListElement {text1: "hello world 2"; type: "they"}
-              ListElement {text1: "hello world 3";type: "me" }
-                ListElement {text1: "hello o world 4 hello  o world 4 hello  o world 4 hello  o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello world 4 hello <a href='http://www.kde.org'>click here</a> world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4
-hello world 4 hello world 4 hello world 4 hello world 4"; type:"me"}
-                ListElement {text1: "hello o world 4 hello  o world 4 hello  o world 4 hello  o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello world 4 hello <a href='http://www.kde.org'>click here</a> world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4
-hello world 4 hello world 4 hello world 4 hello world 4"; type:"they"}
-                  ListElement {text1: "<img src='https://vk.com/images/emoji/D83DDE34.png'></img>"; type:"me"}
-                    ListElement {text1: "hello world 6"; type:"they"}
-        }
+        model: mod
+//            ListElement {text1: "hello world";  author:"BolvinovLox"; time:"20:45"}
+//            ListElement {text1: "hello world 2"; author: "1"; time:"20:46"}
+//              ListElement {text1: "hello world 3"; author:"Semen"; time :"20:50"}
+//                ListElement {text1: "hello o world 4 hello  o world 4 hello  o world 4 hello  o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello world 4 hello <a href='http://www.kde.org'>click here</a> world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4
+//hello world 4 hello world 4 hello world 4 hello world 4"; author:"1"; time :"20:51"}
+//                ListElement {text1: "hello o world 4 hello  o world 4 hello  o world 4 hello  o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello world 4 hello <a href='http://www.kde.org'>click here</a> world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4
+//hello world 4 hello world 4 hello world 4 hello world 4"; author:"BolvinovLox"; time: "21:00"}
+//                  ListElement {text1: "<img src='https://vk.com/images/emoji/D83DDE34.png'></img>"; author:"Misha"; time:"21:15"}
+//                    ListElement {text1: "Стас лох"; author:"putin"; time:"21:50"}
+
         delegate : ItemDelegate {
-            property bool me: type == "me"
+            property bool me: author == User.nickname
             id: dlg
             height: txt.height + 40
             width :parent.width
@@ -169,8 +191,8 @@ hello world 4 hello world 4 hello world 4 hello world 4"; type:"they"}
                 z: 0
                 Rectangle {
                     Text {
-                        id: author
-                        text: "Блюмин Семен"
+                        id: authorText
+                        text: author
                         anchors.top: parent.top
                         anchors.topMargin: 2
                         anchors.left: parent.left
@@ -181,7 +203,7 @@ hello world 4 hello world 4 hello world 4 hello world 4"; type:"they"}
                     Rectangle {
                         color: !me ? "blue" : "#ff00ff"
                         height: 1
-                        anchors.top: author.bottom
+                        anchors.top: authorText.bottom
                         anchors.topMargin: 2
                         anchors.left: parent.left
                         anchors.right: parent.right
@@ -204,13 +226,12 @@ hello world 4 hello world 4 hello world 4 hello world 4"; type:"they"}
                     radius: 12
                     border.width: 1
                     Text {
-                        text: "20:45"
+                        text: time
                         anchors.top: parent.top
                         anchors.topMargin: 2
                         anchors.right: parent.right
                         color: "gray"
                         anchors.rightMargin: 5
-
                     }
                 }
             }
@@ -283,8 +304,9 @@ hello world 4 hello world 4 hello world 4 hello world 4"; type:"they"}
                 height: parent.height/2
 
                 onClicked: {
-                    if(messageText.text.replace(/\s+/g, '')!="")
-                        list.model.append({"text1": messageText.text, "type" :"me"})
+                    if(messageText.text.replace(/\s+/g, '')!="") {
+                        Client.post(qsTr(messageText.text), qsTr(User.nickname))
+                    }
                     messageText.text = ""
                 }
 

@@ -5,7 +5,7 @@ import QtQuick.Window 2.2
 // Страница авторизации
 Rectangle {
     id: root
-    anchors.fill:parent
+//    anchors.fill:parent
 
     Rectangle {
         id: roof
