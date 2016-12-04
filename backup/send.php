@@ -9,8 +9,6 @@ $date = date('Y-m-d H:i:s');
 header('Content-type: text/html; charset=utf-8');
 $mysqli = new mysqli(server, login, password, db_name);
 
-
-// $mysqli->query("SET NAMES 'UTF-8'");
 $mysqli->set_charset("utf8");
 
 $result = $mysqli->query("INSERT INTO messages(`author`, `message`, `date`) VALUES('".$author."', '".$message."', '".$date."')");

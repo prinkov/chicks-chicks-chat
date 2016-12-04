@@ -7,6 +7,7 @@ $lastid = $_POST['lastid'];
 $date = date('Y-m-d H:i:s');
 header('Content-type: text/html; charset=utf-8');
 $mysqli = new mysqli(server, login, password, db_name);
+$mysqli->set_charset("utf8");
 
 if($lastid == -1) {
 	$result = $mysqli->query("SELECT max(id) FROM messages");
