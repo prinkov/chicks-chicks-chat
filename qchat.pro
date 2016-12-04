@@ -2,7 +2,8 @@ QT += qml quick
 
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    sender.cpp
 
 RESOURCES += qml.qrc \
     images.qrc
@@ -14,3 +15,6 @@ QML_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    sender.hpp

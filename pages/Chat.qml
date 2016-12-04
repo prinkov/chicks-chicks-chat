@@ -23,17 +23,27 @@ Rectangle{
     property int lastId:0
     }
 
+    Sender{
+        id: sender
+        onOnAnswer: {
+            console.log(value)
+            Client.post('<a href="' + value+ '">Файл</a>', qsTr(User.nickname))
+        }
+    }
+
     Component.onCompleted: {
         Client.get(msgLastId)
+        sender.setUrl("http://localhost/sendfile.php")
+
     }
 
     function setMsgLastId(i) {
        msgLastId = i
-        console.log("msgLastId chaged to " + i)
+//        console.log("msgLastId chaged to " + i)
     }
 
     Timer {
-        interval: 3000
+        interval: 100
         repeat: true
         running: true
         onTriggered: {
@@ -46,8 +56,7 @@ Rectangle{
         title: "Выбирите файл для отправки"
         folder: shortcuts.home
         onAccepted: {
-            console.log("You chose: " + fileDialog.fileUrls)
-
+            sender.sendImage(fileDialog.fileUrls)
         }
         onRejected: {
             console.log("Canceled")
@@ -271,8 +280,9 @@ Rectangle{
                 Keys.onPressed: {
                       if(event.modifiers && Qt.ControlModifier) {
                           if(event.key === Qt.Key_Return) {
-                              if(messageText.text.replace(/\s+/g, '')!="")
-                                  list.model.append({"text1":messageText.text, "type" :"me"})
+                              if(messageText.text.replace(/\s+/g, '')!="") {
+                                  Client.post(qsTr(messageText.text), qsTr(User.nickname))
+                              }
                               messageText.text = ""
                           }
                       }

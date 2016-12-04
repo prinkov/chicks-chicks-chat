@@ -1,7 +1,7 @@
 
 
 function post(message, author) {
-
+    console.log(message)
     var request = new XMLHttpRequest()
     request.open("POST", "http://localhost/send.php")
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -29,7 +29,7 @@ function get(lastId) {
         return;
     request.open("POST", "http://localhost/get.php")
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    console.log("lastId in function = " + lastId)
+//    console.log("lastId in function = " + lastId)
     var response
     var param = "lastid="+lastId
     request.onreadystatechange = function () {
@@ -37,17 +37,19 @@ function get(lastId) {
             if (request.status === 200) {
                 if(request.responseText != "-1") {
                     response = request.responseText
-                    console.log("response = " + response)
                     var t = JSON.parse(response)
-                    if(t) {
-                        for(var i = 0; i < t.length; i++) {
-                            chat.mod.append({"text1": t[i].message, "author" : t[i].author, "time":t[i].date})
+                        if(t)
+                            if(t[0].id > chat.msgLastId && t[t.length-1].id > chat.msgLastId) {
+                            for(var i = 0; i < t.length; i++) {
+                                if(t[i].id > chat.msgLastId)
+                                chat.mod.append({"text1": t[i].message, "author" : t[i].author, "time":t[i].date})
+                            }
+                            chat.setMsgLastId(t[t.length-1].id)
                         }
-                        chat.setMsgLastId(t[t.length-1].id)
-                    }
                 } else {console.log("empty")}
             }
         }
     }
     request.send(param)
 }
+
