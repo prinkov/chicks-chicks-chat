@@ -20,6 +20,6 @@ ApplicationWindow {
         initialItem: IndexLogin{}
     }
     Component.onCompleted: {
-        User.nickname = "alexey"
+        User.nickname = ""
     }
 }

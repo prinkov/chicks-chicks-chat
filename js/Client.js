@@ -1,7 +1,9 @@
+.import "System.js" as System
+
 function post(message, author) {
     console.log(message)
     var request = new XMLHttpRequest()
-    request.open("POST", "http://localhost/send.php")
+    request.open("POST", System.server + "/send.php")
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     var param = "author=" + author+"&message=" + message
     request.onreadystatechange = function () {
@@ -25,7 +27,7 @@ function get(lastId) {
     var request = new XMLHttpRequest()
     if(lastId == 0)
         return;
-    request.open("POST", "http://localhost/get.php")
+    request.open("POST", System.server + "/get.php")
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     var response
     var param = "lastid="+lastId
@@ -36,12 +38,12 @@ function get(lastId) {
                     response = request.responseText
                     var t = JSON.parse(response)
                         if(t)
-                            if(t[0].id > chat.msgLastId && t[t.length-1].id > chat.msgLastId) {
+                            if(parseInt(t[0].id) > parseInt(chat.msgLastId) && parseInt(t[t.length-1].id) > parseInt(chat.msgLastId)) {
                             for(var i = 0; i < t.length; i++) {
-                                if(t[i].id > chat.msgLastId)
+                                if(parseInt(t[i].id) > chat.msgLastId)
                                 chat.mod.append({"id":t[i].id, "text1": t[i].message, "author" : t[i].author, "time":t[i].date})
                             }
-                            chat.setMsgLastId(t[t.length-1].id)
+                            chat.setMsgLastId(parseInt(t[t.length-1].id))
                         }
                 } else {console.log("empty")}
             }
@@ -52,7 +54,7 @@ function get(lastId) {
 
 function update(firstId) {
     var request = new XMLHttpRequest()
-    request.open("POST", "http://localhost/update.php")
+    request.open("POST", System.server + "/update.php")
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     var response
     var param = "firstid="+firstId
@@ -72,6 +74,7 @@ function update(firstId) {
                         }
                 } else {console.log("empty")}
             }
+        loadMsg.visible = false
         }
     }
     request.send(param)

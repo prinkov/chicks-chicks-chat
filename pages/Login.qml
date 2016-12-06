@@ -152,7 +152,8 @@ Item {
     function login(login, password) {
         loading()
         var request = new XMLHttpRequest()
-        request.open("POST", "http://localhost/login.php")
+        console.log(System.server + "/login.php")
+        request.open("POST", System.server + "/login.php")
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
         var param = "login=" + login+"&passwd=" + password
         request.onreadystatechange = function () {

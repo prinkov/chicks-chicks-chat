@@ -27,18 +27,18 @@ Rectangle{
         id: sender
         onOnAnswer: {
             console.log(value)
-            Client.post('<a href=\"' + value+ '\">Файл</a>', qsTr(User.nickname))
+            Client.post('<a href=\"' + value+ '\" >Файл</a>', qsTr(User.nickname))
         }
     }
 
     Component.onCompleted: {
         Client.get(msgLastId)
-        sender.setUrl("http://localhost/sendfile.php")
-
+        sender.setUrl(System.server + "/sendfile.php")
     }
 
     function setMsgLastId(i) {
        msgLastId = i
+        list.currentIndex = mod.count - 1
     }
 
     function sendMessage() {
@@ -46,6 +46,7 @@ Rectangle{
             Client.post(qsTr(messageText.text), qsTr(User.nickname))
         }
         messageText.text = ""
+
     }
 
     Timer {
@@ -66,6 +67,21 @@ Rectangle{
         }
         onRejected: {
             console.log("Canceled")
+        }
+    }
+
+    BusyIndicator {
+        id: loadMsg
+        anchors.top: parent.top
+        anchors.topMargin: 50
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: 100
+        visible: false
+        z: 2
+        ColorOverlay {
+            source: loadMsg
+            anchors.fill: parent
+            color: "#FF00FF"
         }
     }
 
@@ -169,7 +185,7 @@ Rectangle{
     }
     ListView {
         id: list
-        anchors.top: roof.bottom
+        anchors.top: loadMsg.visible ? loadMsg.bottom : roof.bottom
         anchors.topMargin: 0
         anchors.bottom: msgRect.top
         anchors.bottomMargin: 0
@@ -179,10 +195,12 @@ Rectangle{
 
         spacing: 10
         model: mod
-
+        currentIndex: mod.count - 1
         onDragEnded: {
             if(list.contentY < -50 && mod.get(0).id > 0) {
+                loadMsg.visible = true
                 Client.update(mod.get(0).id)
+                currentIndex = 0
             }
         }
 

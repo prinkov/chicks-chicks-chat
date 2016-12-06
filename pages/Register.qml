@@ -156,7 +156,7 @@ Item {
         console.log(login)
         console.log(password)
         var request = new XMLHttpRequest()
-        request.open("POST", "http://localhost/register.php")
+        request.open("POST", System.server + "/register.php")
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
         var param = "login=" + login+"&passwd=" + password
         request.onreadystatechange = function () {
