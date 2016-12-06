@@ -14,3 +14,8 @@ function getHeight(height) {
 function getPointSize (size) {
     return size * screenHeight / standartHeight;
 }
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};

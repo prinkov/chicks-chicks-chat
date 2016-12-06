@@ -27,7 +27,7 @@ Rectangle{
         id: sender
         onOnAnswer: {
             console.log(value)
-            Client.post('<a href="' + value+ '">Файл</a>', qsTr(User.nickname))
+            Client.post('<a href=\"' + value+ '\">Файл</a>', qsTr(User.nickname))
         }
     }
 
@@ -39,7 +39,13 @@ Rectangle{
 
     function setMsgLastId(i) {
        msgLastId = i
-//        console.log("msgLastId chaged to " + i)
+    }
+
+    function sendMessage() {
+        if(messageText.text.replace(/\s+/g, '')!="") {
+            Client.post(qsTr(messageText.text), qsTr(User.nickname))
+        }
+        messageText.text = ""
     }
 
     Timer {
@@ -168,18 +174,17 @@ Rectangle{
         anchors.bottom: msgRect.top
         anchors.bottomMargin: 0
         width: parent.width
-        currentIndex: mod.count-1
+
+        cacheBuffer: 100
+
         spacing: 10
         model: mod
-//            ListElement {text1: "hello world";  author:"BolvinovLox"; time:"20:45"}
-//            ListElement {text1: "hello world 2"; author: "1"; time:"20:46"}
-//              ListElement {text1: "hello world 3"; author:"Semen"; time :"20:50"}
-//                ListElement {text1: "hello o world 4 hello  o world 4 hello  o world 4 hello  o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello world 4 hello <a href='http://www.kde.org'>click here</a> world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4
-//hello world 4 hello world 4 hello world 4 hello world 4"; author:"1"; time :"20:51"}
-//                ListElement {text1: "hello o world 4 hello  o world 4 hello  o world 4 hello  o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello o world 4 hello world 4 hello <a href='http://www.kde.org'>click here</a> world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4 hello world 4
-//hello world 4 hello world 4 hello world 4 hello world 4"; author:"BolvinovLox"; time: "21:00"}
-//                  ListElement {text1: "<img src='https://vk.com/images/emoji/D83DDE34.png'></img>"; author:"Misha"; time:"21:15"}
-//                    ListElement {text1: "Стас лох"; author:"putin"; time:"21:50"}
+
+        onDragEnded: {
+            if(list.contentY < -50 && mod.get(0).id > 0) {
+                Client.update(mod.get(0).id)
+            }
+        }
 
         delegate : ItemDelegate {
             property bool me: author == User.nickname
@@ -280,10 +285,7 @@ Rectangle{
                 Keys.onPressed: {
                       if(event.modifiers && Qt.ControlModifier) {
                           if(event.key === Qt.Key_Return) {
-                              if(messageText.text.replace(/\s+/g, '')!="") {
-                                  Client.post(qsTr(messageText.text), qsTr(User.nickname))
-                              }
-                              messageText.text = ""
+                              sendMessage()
                           }
                       }
                 }
@@ -314,10 +316,7 @@ Rectangle{
                 height: parent.height/2
 
                 onClicked: {
-                    if(messageText.text.replace(/\s+/g, '')!="") {
-                        Client.post(qsTr(messageText.text), qsTr(User.nickname))
-                    }
-                    messageText.text = ""
+                    sendMessage()
                 }
 
                 background: Image {
