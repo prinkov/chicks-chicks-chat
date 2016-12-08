@@ -14,12 +14,13 @@ ApplicationWindow {
     height: debug ? 640 : Screen.height
 
     title: qsTr("Chicks-chicks")
+
     StackView {
         id: stack
         anchors.fill: parent
         initialItem: IndexLogin{}
-    }
-    Component.onCompleted: {
-        User.nickname = ""
-    }
+        }
+        Component.onCompleted: {
+            User.nickname = ""
+        }
 }

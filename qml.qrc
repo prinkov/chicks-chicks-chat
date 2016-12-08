@@ -13,5 +13,6 @@
         <file>objects/User.qml</file>
         <file>pages/Loading.qml</file>
         <file>js/Client.js</file>
+        <file>pages/FileSelector.qml</file>
     </qresource>
 </RCC>

@@ -37,23 +37,7 @@ Rectangle{
     Rectangle {
         id: fileLoad
         visible: false
-//        Button {
-//            background :Image {
-//                anchors.fill: parent
-//                source: "qrc:/img/cross.png"
-//                antialiasing: true
-//                fillMode: Image.PreserveAspectFit
-//            }
-//            height: 50
-//            anchors.top: parent.top
-//            anchors.topMargin: 10
-//            anchors.right: parent.right
-//            anchors.rightMargin: 10
-//            onClicked: {
-//                console.log("ok")
-//            }
 
-//        }
         anchors.fill: parent
         opacity: 0.8
         Text {
@@ -107,17 +91,30 @@ Rectangle{
         }
     }
 
-    FileDialog {
+//    FileDialog {
+//        id: fileDialog
+//        title: "Выбирите файл для отправки"
+//        folder: shortcuts.pictures
+//        onAccepted: {
+//            sender.sendImage(fileDialog.fileUrls)
+//            fileLoad.visible = true
+//        }
+//        onRejected: {
+//            console.log("Canceled")
+//        }
+//    }
+
+    FileSelector {
         id: fileDialog
-        title: "Выбирите файл для отправки"
-        folder: shortcuts.home
-        onAccepted: {
-            sender.sendImage(fileDialog.fileUrls)
+        visible: false
+        z: 10
+        onSelect: {
+            sender.sendImage(fileDialog.path)
             fileLoad.visible = true
         }
         onRejected: {
-            console.log("Canceled")
-        }
+                  console.log("Canceled")
+              }
     }
 
     BusyIndicator {
