@@ -1,10 +1,9 @@
 var standartWidth = 360
 var standartHeight = 640
-var screenWidth = standartWidth
-var screenHeight = standartHeight
+var screenWidth = rootWindow.width
+var screenHeight = rootWindow.height
 
-var server = "http://prinkov.xyz/chat"
-
+var server = !rootWindow.debug ? "http://localhost" :  "http://prinkov.xyz/chat"
 function getWidth(width) {
     return width * screenWidth / standartWidth ;
 }

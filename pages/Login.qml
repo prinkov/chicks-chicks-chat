@@ -27,7 +27,7 @@ Item {
         // Логотип
         Image {
             id: logo
-            height: 100
+            height: System.getHeight(100)
             fillMode: Image.PreserveAspectFit
             anchors.top: parent.top
 
@@ -144,14 +144,21 @@ Item {
         }
     }
 
-    Component.onCompleted: {
-        System.screenWidth = Screen.width
-        System.screenHeight = Screen.height
+    Timer {
+        id: timeout
+        running: false
+        repeat: false
+        interval: 15000
+        onTriggered: {
+            connectError()
+        }
     }
 
     function login(login, password) {
         loading()
+        timeout.start()
         var request = new XMLHttpRequest()
+
         console.log(System.server + "/login.php")
         request.open("POST", System.server + "/login.php")
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -163,9 +170,10 @@ Item {
                         loginResolve(login)
                     else if(request.responseText == "-1")
                        loginError()
-                    else
-                        connectError()
+                    timeout.stop()
                 }
+                else
+                    connectError()
             }
         }
         request.send(param)
@@ -179,6 +187,7 @@ Item {
     }
 
     function loginError(error) {
+        msgErr.messageText = "Неверный логин/пароль"
         msgErr.visible = true
         load.stop()
     }

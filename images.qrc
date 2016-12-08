@@ -11,5 +11,6 @@
         <file>img/youmsg.png</file>
         <file>img/mymsg.png</file>
         <file>img/load.png</file>
+        <file>img/cross.png</file>
     </qresource>
 </RCC>

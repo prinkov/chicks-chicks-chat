@@ -155,7 +155,6 @@ Item {
                  rightPadding: field.indicator.width + field.spacing
                  font.pointSize: System.getPointSize(14)
                  text: root.def ? defText : field.displayText
-//                 font.family: mainFont.font
                  color: root.def ? "#bdbebf" : "black"
                  horizontalAlignment: Text.AlignLeft
                  verticalAlignment: Text.AlignVCenter

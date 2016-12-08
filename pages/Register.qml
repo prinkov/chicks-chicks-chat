@@ -11,13 +11,9 @@ import "qrc:/js/System.js" as System
 import "../template"
 
 Item {
+    property var load
     property alias acceptRegText: acceptRegText
     id: reg
-
-
-
-    //Для ровного переноса текста
-   //clip:true
 
     Rectangle {
         id: frame
@@ -152,7 +148,25 @@ Item {
         }
     }
 
+    function loading() {
+        var component = Qt.createComponent("qrc:/pages/Loading.qml");
+        load = component.createObject(rootWindow);
+        load.start()
+    }
+
+    Timer {
+        id: timeout
+        running: false
+        repeat: false
+        interval: 15000
+        onTriggered: {
+            connectError()
+        }
+    }
+
     function register(login, password) {
+        loading()
+        timeout.start()
         console.log(login)
         console.log(password)
         var request = new XMLHttpRequest()
@@ -166,15 +180,24 @@ Item {
                         registerResolve()
                     else
                        registerError()
+                    timeout.stop()
                 } else {
-                    view.yaPosition = "interten connection error"
+                    connectError()
                 }
             }
         }
         request.send(param)
     }
 
+    function connectError(error) {
+        msgErr.messageText = "Проверьте интернет соединение"
+        msgErr.visible = true
+        load.stop()
+
+    }
+
     function registerResolve() {
+        load.visible = false
         msgErr.titleText = ""
         msgErr.messageText = "Регистрация пройдена, теперь пройдите авторизацию"
         msgErr.visible = true
@@ -182,6 +205,7 @@ Item {
     }
 
     function registerError() {
+        load.visible = false
         msgErr.titleText = "Произошла ошибка!"
         msgErr.messageText = "Введенный вами ник уже зарегистрирован в системе. Попробуйте восстановить пароль"
         msgErr.visible = true

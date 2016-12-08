@@ -26,12 +26,62 @@ Rectangle{
     Sender{
         id: sender
         onOnAnswer: {
-            console.log(value)
-            Client.post('<a href=\"' + value+ '\" >Файл</a>', qsTr(User.nickname))
+            if(value == "-1")
+                console.log("error")
+            else
+                Client.post('<a href=\"' + value+ '\" >Файл</a>', qsTr(User.nickname))
+            fileLoad.visible = false
         }
     }
 
+    Rectangle {
+        id: fileLoad
+        visible: false
+//        Button {
+//            background :Image {
+//                anchors.fill: parent
+//                source: "qrc:/img/cross.png"
+//                antialiasing: true
+//                fillMode: Image.PreserveAspectFit
+//            }
+//            height: 50
+//            anchors.top: parent.top
+//            anchors.topMargin: 10
+//            anchors.right: parent.right
+//            anchors.rightMargin: 10
+//            onClicked: {
+//                console.log("ok")
+//            }
+
+//        }
+        anchors.fill: parent
+        opacity: 0.8
+        Text {
+            id: info
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            color: "white"
+            text: "Загрузка файла"
+        }
+
+        BusyIndicator {
+            anchors.top: info.bottom
+            anchors.topMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: System.getHeight(100)
+            ColorOverlay {
+                source: parent
+                anchors.fill: parent
+                color: "white"
+            }
+        }
+
+        z: 3
+        color: "black"
+    }
+
     Component.onCompleted: {
+        loadMsg.visible = true
         Client.get(msgLastId)
         sender.setUrl(System.server + "/sendfile.php")
     }
@@ -46,7 +96,6 @@ Rectangle{
             Client.post(qsTr(messageText.text), qsTr(User.nickname))
         }
         messageText.text = ""
-
     }
 
     Timer {
@@ -64,6 +113,7 @@ Rectangle{
         folder: shortcuts.home
         onAccepted: {
             sender.sendImage(fileDialog.fileUrls)
+            fileLoad.visible = true
         }
         onRejected: {
             console.log("Canceled")
@@ -75,7 +125,7 @@ Rectangle{
         anchors.top: parent.top
         anchors.topMargin: 50
         anchors.horizontalCenter: parent.horizontalCenter
-        height: 100
+        height: System.getHeight(100)
         visible: false
         z: 2
         ColorOverlay {
@@ -89,6 +139,7 @@ Rectangle{
         id: roof
         color: "#FF00FF"
         width: parent.width
+        enabled: !fileLoad.visible
         height: System.getHeight(40)
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -187,6 +238,7 @@ Rectangle{
         id: list
         anchors.top: loadMsg.visible ? loadMsg.bottom : roof.bottom
         anchors.topMargin: 0
+        enabled: !fileLoad.visible
         anchors.bottom: msgRect.top
         anchors.bottomMargin: 0
         width: parent.width
@@ -208,7 +260,7 @@ Rectangle{
             property bool me: author == User.nickname
             id: dlg
             height: txt.height + 40
-            width :parent.width
+            width : list.width
             Text {
                 id: txt
                 anchors.left: parent.left
@@ -281,11 +333,12 @@ Rectangle{
         anchors.leftMargin: 0
         border.width: 2
         border.color: messageText.focus ? "#FF00FF" : "gray"
-        height: 100
+        height: System.getHeight(100)
         color: "white"
         radius: 5
         Flickable {
             id: flickable
+            enabled: !fileLoad.visible
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom

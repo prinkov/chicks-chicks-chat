@@ -44,6 +44,8 @@ function get(lastId) {
                                 chat.mod.append({"id":t[i].id, "text1": t[i].message, "author" : t[i].author, "time":t[i].date})
                             }
                             chat.setMsgLastId(parseInt(t[t.length-1].id))
+                            list.currentIndex = mod.count - 1
+                            loadMsg.visible = false
                         }
                 } else {console.log("empty")}
             }
