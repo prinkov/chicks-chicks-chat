@@ -1,5 +1,4 @@
 import QtQuick 2.7
-import QtGraphicalEffects 1.0
 
 
 Rectangle {
@@ -15,22 +14,13 @@ Rectangle {
 
         source: "qrc:/img/load.png"
 
-        ColorOverlay {
-                    anchors.fill: load
-                    source: load
-                    color: "#FF00FF"
-
-        }
-
-
-
         RotationAnimator on rotation{
                id: anim
                loops: Animation.Infinite
                target: load
                easing.type: Easing.InElastic
                easing.amplitude: 4.0;
-                easing.period: 6
+               easing.period: 6
 
                from: 0
                to: 360

@@ -4,27 +4,19 @@ import QtQuick.Layouts 1.3
 
 import "qrc:/js/System.js" as System
 
-/*
-  Всплывающее окно
-  Важно!! кнопки не совсем одинаковые получатся, нужно исправить!
-  */
-
 Item {
     property string bckgColor: "#000000"
     property string mainColor: "#ffffff"
     property string titleText: qsTr("Заголовок")
     property string messageText: qsTr("Сообщение")
-    // true - две кнопки(Да и Нет) , flase - одна (ОК)
 
     width: rootWindow.width
     height: rootWindow.height
-
 
     id: root
     z: 1
     visible: false
 
-    //Фон позади всплывающего окна
     Rectangle {
         id: background
         width: parent.width
@@ -32,9 +24,6 @@ Item {
         color: bckgColor
         opacity: 0.8
 
-        signal click();
-
-        //Закрытие окна
         MouseArea {
             id: area
             anchors.fill: background
@@ -45,8 +34,6 @@ Item {
     }
 
     Rectangle {
-
-        signal click();
 
         MouseArea {
             id: area2
@@ -74,7 +61,6 @@ Item {
             anchors.rightMargin: 40
             anchors.left: parent.left
             anchors.leftMargin: 40
-//            font.family: mainFont.name
             text: (titleText != "") ? titleText : messageText
             visible: true
             clip: true
@@ -90,14 +76,11 @@ Item {
             anchors.top: title.bottom
             anchors.topMargin: 20
 
-
-
             anchors.right: parent.right
             anchors.rightMargin: 20
 
             anchors.left: parent.left
             anchors.leftMargin: 20
-//            font.family: mainFont.name
             visible: true
             clip: true
             textFormat: Text.PlainText
@@ -115,7 +98,6 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 70
             spacing: 40
-
 
             ChiksButton {
                 id: no

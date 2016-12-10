@@ -4,15 +4,13 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls.Styles 1.4
 
 import "qrc:/js/System.js" as System
-/*
-    Страница регистрации
-*/
 
 import "../template"
 
 Item {
     property var load
     property alias acceptRegText: acceptRegText
+    property var msgErr
     id: reg
 
     Rectangle {
@@ -42,7 +40,6 @@ Item {
             anchors.rightMargin: 40
             anchors.left: parent.left
             anchors.leftMargin: 40
-//            font.family: mainFont.name
             text: qsTr("Мы рады видеть Вас в нашем чате")
             visible: true
             textFormat: Text.PlainText
@@ -56,7 +53,6 @@ Item {
             anchors.top: acceptRegText.bottom
             anchors.topMargin: 15
             anchors.right: parent.right
-//            typeInput: "mobil"
             anchors.rightMargin: 20
             anchors.left: parent.left
             anchors.leftMargin: 20
@@ -106,7 +102,6 @@ Item {
             anchors.rightMargin: 40
             anchors.left: parent.left
             anchors.leftMargin: 40
-//            font.family: mainFont.name
             text: qsTr("")
             visible: true
             textFormat: Text.PlainText
@@ -114,13 +109,6 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             color: "blue"
         }
-
-        ChiksWindow{
-            id: msgErr
-            titleText: qsTr("Произошла ошибка!")
-            messageText: qsTr("Введенный вами ник уже зарегистрирован в системе. Восстановить пароль?")
-        }
-
 
         ChiksButton {
             anchors.bottom: parent.bottom
@@ -133,25 +121,15 @@ Item {
             y: 301
             onClick: {
                 if(pass1.getText() == "" || nickname.getText() == "") {
-                    msgErr.titleText = "Ошибка"
-                    msgErr.messageText = "Заполните все поля"
-                    msgErr.visible = true
+                    msgErr = rootWindow.createError("Ошибка", "Заполните все поля")
                 } else if(pass1.getText() == pass2.getText())
                     register(nickname.getText(), pass1.getText())
                 else {
-                    msgErr.titleText = "Ошибка"
-                    msgErr.messageText = "Введенные пароли не совпадают"
-                    msgErr.visible = true
+                    msgErr = rootWindow.createError("Ошибка", "Введенные пароли не совпадают")
 
                 }
             }
         }
-    }
-
-    function loading() {
-        var component = Qt.createComponent("qrc:/pages/Loading.qml");
-        load = component.createObject(rootWindow);
-        load.start()
     }
 
     Timer {
@@ -165,7 +143,7 @@ Item {
     }
 
     function register(login, password) {
-        loading()
+        load = rootWindow.loading()
         timeout.start()
         console.log(login)
         console.log(password)
@@ -189,27 +167,21 @@ Item {
         request.send(param)
     }
 
-    function connectError(error) {
-        msgErr.messageText = "Проверьте интернет соединение"
-        msgErr.visible = true
+    function connectError() {
         load.stop()
-
+        msgErr = rootWindow.createError("Ошибка", "Проверьте интернет соединение")
     }
 
     function registerResolve() {
-        load.visible = false
-        msgErr.titleText = ""
-        msgErr.messageText = "Регистрация пройдена, теперь пройдите авторизацию"
-        msgErr.visible = true
+        load.stop()
+        msgErr = rootWindow.createError("", "Регистрация пройдена, теперь пройдите авторизацию")
 
     }
 
     function registerError() {
-        load.visible = false
-        msgErr.titleText = "Произошла ошибка!"
-        msgErr.messageText = "Введенный вами ник уже зарегистрирован в системе. Попробуйте восстановить пароль"
-        msgErr.visible = true
-
+        load.stop()
+        msgErr.messageText = rootWindow.createError("Произошла ошибка",
+                                                    "Введенный вами ник уже зарегистрирован в системе. Попробуйте восстановить пароль")
     }
 
 }

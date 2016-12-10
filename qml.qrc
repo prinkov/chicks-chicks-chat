@@ -14,5 +14,6 @@
         <file>pages/Loading.qml</file>
         <file>js/Client.js</file>
         <file>pages/FileSelector.qml</file>
+        <file>template/ChiksLoader.qml</file>
     </qresource>
 </RCC>

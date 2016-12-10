@@ -5,10 +5,8 @@ import QtQuick.Window 2.2
 
 import "qrc:/js/System.js" as System
 
-// Страница авторизации
 Rectangle {
     id: root
-//    anchors.fill:parent
 
     Rectangle {
         id: roof
@@ -17,7 +15,6 @@ Rectangle {
         height: System.getHeight(40)
         visible:true
 
-        // верхнее меню
         TabBar {
             currentIndex: swipeView.currentIndex
             id: tabBar

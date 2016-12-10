@@ -9,22 +9,17 @@ import "../objects"
 
 import xyz.prinkov 1.0
 
-/*
-  Страница входа.
-*/
-
 Item {
     property string title: "Логин"
     property bool flag: false
     property var load
-    // Главная область
+    property var msgErr
 
     Rectangle {
         id: frame
         anchors.fill: parent
         color: "#00000000"
 
-        // Логотип
         Image {
             id: logo
             height: System.getHeight(100)
@@ -41,11 +36,9 @@ Item {
             source: "qrc:/img/logo.png"
         }
 
-        // Поле ввода номера телефона
         ChiksTextField {
             id: nickname
 
-//            typeInput: "mobil"
             anchors.top: logo.bottom
             anchors.topMargin: 15
 
@@ -61,7 +54,6 @@ Item {
             defaultIcon: "qrc:/img/login.png"
         }
 
-        // Поле ввода пароля
         ChiksTextField {
             id: pass
 
@@ -92,7 +84,6 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
 
-            //  Кнопка входа
             ChiksButton {
                 id: submit
 
@@ -112,11 +103,9 @@ Item {
                 }
             }
 
-            // Текстовая подсказка
              Text {
                 id: forgotPswdText
                 font.pixelSize: System.getHeight(12)
-//                font.family: mainFont.name
                 anchors.verticalCenter: rect.verticalCenter
                 anchors.horizontalCenter: rect.horizontalCenter
                 text: qsTr("Забыли пароль?")
@@ -130,7 +119,6 @@ Item {
 
             ChiksButton {
                 id: resetPass
-//                color: "#ffffff"
                 text: qsTr("Восстановить пароль")
                 anchors.bottom: rect.bottom
                 anchors.bottomMargin: 20
@@ -138,8 +126,6 @@ Item {
                 anchors.leftMargin: 0
                 anchors.right: rect.right
                 anchors.rightMargin: 0
-//                textColor: "#0038a5"
-//                border: true
             }
         }
     }
@@ -155,7 +141,7 @@ Item {
     }
 
     function login(login, password) {
-        loading()
+        load = rootWindow.loading()
         timeout.start()
         var request = new XMLHttpRequest()
 
@@ -187,28 +173,14 @@ Item {
     }
 
     function loginError(error) {
-        msgErr.messageText = "Неверный логин/пароль"
-        msgErr.visible = true
+        msgErr = rootWindow.createError("Ошибка", "Неверный логин/пароль")
         load.stop()
     }
 
 
     function connectError(error) {
-        msgErr.messageText = "Проверьте интернет соединение"
-        msgErr.visible = true
+        msgErr = rootWindow.createError("Ошибка", "Проверьте интернет соединение")
         load.stop()
-
     }
 
-    function loading() {
-        var component = Qt.createComponent("qrc:/pages/Loading.qml");
-        load = component.createObject(rootWindow);
-        load.start()
-    }
-
-    ChiksWindow {
-        id: msgErr
-        titleText: qsTr("Ошибка входа")
-        messageText: "Неверный логин/пароль"
-    }
 }

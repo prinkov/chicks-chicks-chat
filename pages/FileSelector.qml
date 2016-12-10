@@ -35,7 +35,6 @@ Rectangle {
             onClicked: {
                 var str = folderList.folder.toString()
                 folderList.folder = str.substring(0, str.lastIndexOf("/"))
-                console.log(folderList.folder)
             }
         }
         Text {
@@ -94,15 +93,11 @@ Rectangle {
         add: Transition {
             NumberAnimation { properties: "x"; from: 1000; duration: 500 }
         }
-        FileDialog{
-            Component.onCompleted: {
-                console.log(shortcuts.home)
-            }
-        }
+
         model: FolderListModel {
             id: folderList
             showDirs: true
-            folder: "file:///home/akaroot"
+            folder: "file:///storage/"
             showHidden: false
         }
 
@@ -141,6 +136,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     path = model.fileURL
+                    console.log(path)
                     if(fileIsDir)
                         folderList.folder = path
                     else {

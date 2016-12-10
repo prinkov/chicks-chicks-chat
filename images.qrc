@@ -14,5 +14,6 @@
         <file>img/cross.png</file>
         <file>img/fileHover.png</file>
         <file>img/folder.png</file>
+        <file>img/sendHover.png</file>
     </qresource>
 </RCC>

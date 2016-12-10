@@ -18,9 +18,8 @@ Rectangle{
 
     id: chat
     property int msgLastId:-1
+    property var fileLoad
     property var  mod: ListModel{
-//        ListElement {text1: "hello world 3"; author:"Semen"; time :"20:50"}
-    property int lastId:0
     }
 
     Sender{
@@ -30,38 +29,8 @@ Rectangle{
                 console.log("error")
             else
                 Client.post('<a href=\"' + value+ '\" >Файл</a>', qsTr(User.nickname))
-            fileLoad.visible = false
+            chat.fileLoad.visible = false
         }
-    }
-
-    Rectangle {
-        id: fileLoad
-        visible: false
-
-        anchors.fill: parent
-        opacity: 0.8
-        Text {
-            id: info
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            color: "white"
-            text: "Загрузка файла"
-        }
-
-        BusyIndicator {
-            anchors.top: info.bottom
-            anchors.topMargin: 10
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: System.getHeight(100)
-            ColorOverlay {
-                source: parent
-                anchors.fill: parent
-                color: "white"
-            }
-        }
-
-        z: 3
-        color: "black"
     }
 
     Component.onCompleted: {
@@ -91,31 +60,6 @@ Rectangle{
         }
     }
 
-//    FileDialog {
-//        id: fileDialog
-//        title: "Выбирите файл для отправки"
-//        folder: shortcuts.pictures
-//        onAccepted: {
-//            sender.sendImage(fileDialog.fileUrls)
-//            fileLoad.visible = true
-//        }
-//        onRejected: {
-//            console.log("Canceled")
-//        }
-//    }
-
-    FileSelector {
-        id: fileDialog
-        visible: false
-        z: 10
-        onSelect: {
-            sender.sendImage(fileDialog.path)
-            fileLoad.visible = true
-        }
-        onRejected: {
-                  console.log("Canceled")
-              }
-    }
 
     BusyIndicator {
         id: loadMsg
@@ -136,7 +80,6 @@ Rectangle{
         id: roof
         color: "#FF00FF"
         width: parent.width
-        enabled: !fileLoad.visible
         height: System.getHeight(40)
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -235,7 +178,6 @@ Rectangle{
         id: list
         anchors.top: loadMsg.visible ? loadMsg.bottom : roof.bottom
         anchors.topMargin: 0
-        enabled: !fileLoad.visible
         anchors.bottom: msgRect.top
         anchors.bottomMargin: 0
         width: parent.width
@@ -335,7 +277,6 @@ Rectangle{
         radius: 5
         Flickable {
             id: flickable
-            enabled: !fileLoad.visible
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
@@ -393,16 +334,7 @@ Rectangle{
                     scale: 0.8
                     antialiasing: true
                     fillMode: Image.PreserveAspectFit
-
-                    source: "qrc:/img/send.png"
-                    ColorOverlay {
-                            anchors.fill: sendBck
-                            source: sendBck
-                            color: "#FF00FF"
-                            visible:{
-                                return messageText.text.length!=0
-                            }
-                        }
+                    source:  messageText.text.length!=0 ? "qrc:/img/sendHover.png" :"qrc:/img/send.png"
                 }
             }
 
@@ -421,9 +353,17 @@ Rectangle{
                     fillMode: Image.PreserveAspectFit
                 }
                 onClicked: {
-                    fileDialog.open()
+                    var fileDialog = Qt.createQmlObject("FileSelector { id: fileDialog; visible: true; z: 10}", chat, "fileDialog");
+                    fileDialog.select.connect(function(){
+                        sender.sendImage(fileDialog.path)
+                        chat.fileLoad = rootWindow.chiksLoading("загрузка файла")
+                        fileDialog.destroy()
+                    })
+                    fileDialog.rejected.connect(function(){
+                        console.log("cancel")
+                        fileDialog.destroy()
+                    })
                 }
-
             }
 
         }

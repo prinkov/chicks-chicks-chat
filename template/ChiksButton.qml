@@ -15,13 +15,7 @@ Item {
     property color textColor: "#ffffff"
     property color borderColor: colorBlue
     property color color: colorBlue
-
-
-    /*
-        true - рамка есть, false - нет
-    */
     property bool border: false
-
     signal click();
 
 
@@ -43,7 +37,6 @@ Item {
             color: root.textColor
             text: root.text
             font.pointSize: System.getPointSize(13)
-//            font.family: mainFont.name
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent

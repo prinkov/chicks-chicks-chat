@@ -5,9 +5,6 @@ import "qrc:/js/System.js" as System
     Выпадающий список
   */
 Item {
-    width: System.getWidth(35)
-    height: System.getHeight(35)
-    id: root
     property double scaleImg: 1
     property string hoverIcon: qsTr("")
     property string defaultIcon: qsTr("")
@@ -20,22 +17,20 @@ Item {
     property var valid
     property bool hasIcon: true
     property int maxLength_: 40
-
-    function getText() {
-        return field.text;
-    }
-
     property var onChange: undefined
-
     property var dataStack: []
 
-    /** Инициализация значения поля */
+    id: root
+
+    width: System.getWidth(35)
+    height: System.getHeight(35)
+
+
+
     property var setValue: function (value) {
         dataStack.push(false)
         field.text = value;
     }
-
-
 
     property var inputMethod : {
         "mobil" : qsTr("+7 (000) 000 - 00 - 00;_"),
@@ -51,11 +46,6 @@ Item {
            "digit": Qt.ImhDigitsOnly,
            "vin": Qt.ImhUppercaseOnly
     }
-
-//    FontLoader {
-//        id: mainFont
-//        source: "qrc:/common/fonts/Roboto-Light.ttf"
-//    }
 
     Item {
 
@@ -121,7 +111,6 @@ Item {
 
             maximumLength: maxLength_
             font.pixelSize: System.getPointSize(16)
-//            font.family: mainFont.name
             echoMode: (typeInput == "password") ? TextInput.Password  : TextInput.Normal
 
             placeholderText : root.placeholderText
@@ -166,7 +155,7 @@ Item {
             anchors.topMargin: 0
         }
     }
-
-
-
+    function getText() {
+        return field.text;
+    }
 }
