@@ -93,7 +93,6 @@ function getRooms() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
                 if(request.responseText != "-1") {
-                    console.log(request.responseText)
                     response = request.responseText
                     var t = JSON.parse(response)
                     if(t) {

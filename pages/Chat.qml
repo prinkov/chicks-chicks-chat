@@ -21,6 +21,31 @@ Rectangle{
     property var  mod: ListModel{
     }
 
+    Image {
+        id: pashalka
+        source: "qrc:/img/pas.png"
+        width: System.getHeight(120)
+        height: System.getWidth(120)
+        z: 100
+        visible: false
+        anchors.horizontalCenter: parent.horizontalCenter
+        SequentialAnimation on y {
+            id: yAnim
+            running: false
+            NumberAnimation { from: y -100; to: y + chat.height/2; duration: 3600; easing.type: Easing.InOutQuad }
+            NumberAnimation { from: y + chat.height / 2; to: y - 200; duration: 3600; easing.type: Easing.InOutQuad }
+        }
+
+        SequentialAnimation on rotation {
+            id: rotAnim
+            running: false
+            loops: Animation.Infinite
+            NumberAnimation { from: -10; to: 10; duration: 900; easing.type: Easing.InOutSine }
+            NumberAnimation { from: 10; to: -10; duration: 900; easing.type: Easing.InOutSine }
+        }
+
+    }
+
     Sender{
         id: sender
         onOnAnswer: {
@@ -46,6 +71,11 @@ Rectangle{
     }
 
     function sendMessage() {
+        if(messageText.text == "Автоматическая оценка") {
+            pashalka.visible = true
+            yAnim.running = true
+            rotAnim.running = true
+        }
         if(messageText.text.replace(/\s+/g, '')!="") {
             Client.post(qsTr(messageText.text), qsTr(User.nickname), User.roomId)
         }
