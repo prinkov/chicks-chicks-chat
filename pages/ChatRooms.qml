@@ -5,11 +5,14 @@ import "../js/System.js" as System
 import "../js/Client.js" as Client
 import "../template"
 
+import xyz.prinkov 1.0
+
 Rectangle {
     id: chatRooms
 
     property var model: ListModel{}
     property int lastId: -1
+    property int lastIndex: 0
 
     Timer {
         id: timer
@@ -26,8 +29,6 @@ Rectangle {
         timer.start()
     }
 
-
-
     Rectangle {
         id: roof
         color: "#FF00FF"
@@ -39,10 +40,12 @@ Rectangle {
         }
         Text {
             id: title
-            color: "#FF00FF"
-            text: "Chicks-Chicks Chat"
+            color: "white"
+            text: "Выбор комнаты"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+            font.pointSize: System.getPointSize(12)
+
 
         }
 
@@ -82,7 +85,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.leftMargin: 0
             onClick: {
-
+                stack.push(Qt.resolvedUrl("qrc:/pages/AddRoom.qml"))
             }
             source: "qrc:/img/add.png"
         }

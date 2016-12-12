@@ -1,14 +1,13 @@
 <?php
 
 include("serv.php");
+
 $login = $_POST['login'];
 $passwd = $_POST['passwd'];
 
-// sleep(2);
-
 $mysqli = new mysqli(server, login, password, db_name);
 
-
+echo $mysqli->connect_error;
 
 if ($result = $mysqli->query("SELECT password FROM users WHERE nickname = '".$login."'")) {
  	

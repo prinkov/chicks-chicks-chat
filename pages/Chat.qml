@@ -35,13 +35,14 @@ Rectangle{
     Component.onCompleted: {
         loadMsg.visible = true
         Client.get(msgLastId, User.roomId)
+        Client.iOnline(User.nickname, User.roomId)
         sender.setUrl(System.server + "/sendfile.php")
         timer.start()
     }
 
     function setMsgLastId(i) {
        msgLastId = i
-        list.currentIndex = mod.count - 1
+       list.currentIndex = mod.count - 1
     }
 
     function sendMessage() {
@@ -58,6 +59,7 @@ Rectangle{
         running: false
         onTriggered: {
             Client.get(msgLastId, User.roomId)
+            Client.iOnline(User.nickname, User.roomId)
         }
     }
 

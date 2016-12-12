@@ -93,21 +93,60 @@ function getRooms() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
                 if(request.responseText != "-1") {
+                    console.log(request.responseText)
                     response = request.responseText
                     var t = JSON.parse(response)
                     if(t) {
-                        if(parseInt(t[0].id) > parseInt(chatRooms.lastId))
-                            for(var i = t.length-1; i >= 0; i--) {
-                                chatRooms.model.insert(0, {"uid":t[i].id, "label": t[i].table, "people" : t[i].people})
-                            } else
-                                for(var i = t.length-1; i >= 0; i--) {
-                                    chatRooms.model.get(i).people =t[i].people;
+                        if(parseInt(t[t.length - 1].id) > parseInt(chatRooms.lastId)) {
+                            for(var i = chatRooms.lastIndex; i < t.length; i++) {
+                                chatRooms.model.append({"uid":t[i].id, "label": t[i].table, "people" : t[i].people})
+                            }
+                            chatRooms.lastIndex = t.length
+                        } else
+                                for(var i = 0; i < t.length; i++) {
+                                    chatRooms.model.get(i).people = t[i].people;
                                 }
                         chatRooms.lastId = t[t.length - 1].id;
                     }
                 }
             }
 
+        }
+    }
+    request.send(param)
+}
+
+function createRoom(name) {
+    var request = new XMLHttpRequest()
+    request.open("POST", System.server + "/createRoom.php")
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    var response
+    var param = "name="+name
+    request.onreadystatechange = function () {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
+                if(request.responseText != "-1") {
+                    stack.pop()
+                }
+            }
+
+        }
+    }
+    request.send(param)
+}
+
+function iOnline(name, room) {
+    var request = new XMLHttpRequest()
+    request.open("POST", System.server + "/ionline.php")
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    var response
+    var param = "name=" + name + "&room=" + room
+    request.onreadystatechange = function () {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
+                if(request.responseText == "-1")
+                    console.log("ошибка статуса")
+            }
         }
     }
     request.send(param)
