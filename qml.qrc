@@ -15,5 +15,8 @@
         <file>js/Client.js</file>
         <file>pages/FileSelector.qml</file>
         <file>template/ChiksLoader.qml</file>
+        <file>pages/ChatRooms.qml</file>
+        <file>template/ChatRoomDelegate.qml</file>
+        <file>template/MenuButton.qml</file>
     </qresource>
 </RCC>

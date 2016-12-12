@@ -145,7 +145,6 @@ Item {
         timeout.start()
         var request = new XMLHttpRequest()
 
-        console.log(System.server + "/login.php")
         request.open("POST", System.server + "/login.php")
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
         var param = "login=" + login+"&passwd=" + password
@@ -167,7 +166,7 @@ Item {
 
     function loginResolve(login) {
         User.nickname = login
-        stack.push(Qt.resolvedUrl("qrc:/pages/Chat.qml"))
+        stack.push(Qt.resolvedUrl("qrc:/pages/ChatRooms.qml"))
         load.stop()
 
     }

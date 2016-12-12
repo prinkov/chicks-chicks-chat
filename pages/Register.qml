@@ -145,8 +145,7 @@ Item {
     function register(login, password) {
         load = rootWindow.loading()
         timeout.start()
-        console.log(login)
-        console.log(password)
+
         var request = new XMLHttpRequest()
         request.open("POST", System.server + "/register.php")
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")

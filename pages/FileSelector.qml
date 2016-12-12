@@ -136,7 +136,6 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     path = model.fileURL
-                    console.log(path)
                     if(fileIsDir)
                         folderList.folder = path
                     else {

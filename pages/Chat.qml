@@ -15,7 +15,6 @@ import "../objects"
 import "../template"
 
 Rectangle{
-
     id: chat
     property int msgLastId:-1
     property var fileLoad
@@ -26,17 +25,18 @@ Rectangle{
         id: sender
         onOnAnswer: {
             if(value == "-1")
-                console.log("error")
+                var error = rootWindow.createError("Ошибка", "К сожалению файл не загружен, попробуйте еще раз")
             else
-                Client.post('<a href=\"' + value+ '\" >Файл</a>', qsTr(User.nickname))
+                Client.post('<a href=\"' + value+ '\" >Файл</a>', qsTr(User.nickname), User.roomId)
             chat.fileLoad.visible = false
         }
     }
 
     Component.onCompleted: {
         loadMsg.visible = true
-        Client.get(msgLastId)
+        Client.get(msgLastId, User.roomId)
         sender.setUrl(System.server + "/sendfile.php")
+        timer.start()
     }
 
     function setMsgLastId(i) {
@@ -46,17 +46,18 @@ Rectangle{
 
     function sendMessage() {
         if(messageText.text.replace(/\s+/g, '')!="") {
-            Client.post(qsTr(messageText.text), qsTr(User.nickname))
+            Client.post(qsTr(messageText.text), qsTr(User.nickname), User.roomId)
         }
         messageText.text = ""
     }
 
     Timer {
+        id: timer
         interval: 100
         repeat: true
-        running: true
+        running: false
         onTriggered: {
-            Client.get(msgLastId)
+            Client.get(msgLastId, User.roomId)
         }
     }
 
@@ -148,7 +149,6 @@ Rectangle{
             }
             onClicked:{
                     animationNext.restart()
-                    User.nickname = ""
                     stack.pop()
             }
             OpacityAnimator {
@@ -190,7 +190,7 @@ Rectangle{
         onDragEnded: {
             if(list.contentY < -50 && mod.get(0).id > 0) {
                 loadMsg.visible = true
-                Client.update(mod.get(0).id)
+                Client.update(mod.get(0).id, User.roomId)
                 currentIndex = 0
             }
         }
@@ -206,6 +206,7 @@ Rectangle{
                 anchors.leftMargin: me ? 70 : 15
                 anchors.top: parent.top
                 anchors.topMargin: 30
+                font.pointSize: System.getPointSize(14)
                 anchors.right: parent.right
                 anchors.rightMargin:me ? 15 : 70
                 text:  text1
@@ -360,7 +361,6 @@ Rectangle{
                         fileDialog.destroy()
                     })
                     fileDialog.rejected.connect(function(){
-                        console.log("cancel")
                         fileDialog.destroy()
                     })
                 }
