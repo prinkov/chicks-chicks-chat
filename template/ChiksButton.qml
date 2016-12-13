@@ -36,7 +36,7 @@ Item {
             id: label
             color: root.textColor
             text: root.text
-            font.pointSize: System.getPointSize(13)
+            font.pointSize: System.getPointSize(16)
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent

@@ -21,5 +21,6 @@
         <file>img/ok.png</file>
         <file>img/okDef.png</file>
         <file>img/pas.png</file>
+        <file>img/loginHov.png</file>
     </qresource>
 </RCC>

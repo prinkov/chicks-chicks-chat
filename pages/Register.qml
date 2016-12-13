@@ -58,8 +58,8 @@ Item {
             anchors.leftMargin: 20
             placeholderText : qsTr("Ник")
 
-            hoverIcon: "qrc:/img/login.png"
             defaultIcon: "qrc:/img/login.png"
+            hoverIcon: "qrc:/img/loginHov.png"
         }
 
         ChiksTextField {

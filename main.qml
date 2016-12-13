@@ -9,7 +9,7 @@ import xyz.prinkov 1.0
 
 ApplicationWindow {
     visible: true
-    property bool debug : true
+    property bool debug : false
     id: rootWindow
     width: debug ? 320 : Screen.width
     height: debug ? 640 : Screen.height

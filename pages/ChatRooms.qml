@@ -44,7 +44,7 @@ Rectangle {
             text: "Выбор комнаты"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            font.pointSize: System.getPointSize(12)
+            font.pointSize: System.getPointSize(16)
 
 
         }
