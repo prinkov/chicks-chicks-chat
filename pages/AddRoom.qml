@@ -11,6 +11,22 @@ Rectangle {
         id: roof
         color: "#FF00FF"
         z:1
+        Button {
+            anchors.right: parent.right
+            anchors.margins: 5
+            anchors.verticalCenter: parent.verticalCenter
+            height: roof.height - 10
+            width : roof.height - 10
+            opacity: 0.8
+            onClicked: {
+                stack.pop()
+            }
+            background: Image {
+                id: bk
+                anchors.fill: parent
+                source: "qrc:/img/close.png"
+            }
+        }
         anchors {
             left: parent.left
             right: parent.right
