@@ -137,16 +137,17 @@ Item {
         running: false
         repeat: false
         interval: 15000
-        onTriggered: {
-            connectError()
-        }
+
     }
 
     function register(login, password) {
         load = rootWindow.loading()
+        var request = new XMLHttpRequest()
+        timeout.triggered.connect(function(){
+            request.abort()
+        })
         timeout.start()
 
-        var request = new XMLHttpRequest()
         request.open("POST", System.server + "/register.php")
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
         var param = "login=" + login+"&passwd=" + password
@@ -155,8 +156,10 @@ Item {
                 if (request.status === 200) {
                     if(request.responseText == "1")
                         registerResolve()
-                    else
+                    else if(request.responseText == "-1")
                        registerError()
+                    else
+                        connectError()
                     timeout.stop()
                 } else {
                     connectError()

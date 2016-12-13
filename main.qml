@@ -8,11 +8,12 @@ import "./template"
 import xyz.prinkov 1.0
 
 ApplicationWindow {
+    id: rootWindow
     visible: true
     property bool debug : false
-    id: rootWindow
-    width: debug ? 320 : Screen.width
-    height: debug ? 640 : Screen.height
+    property bool phoneEdition: false
+    width: !phoneEdition ? 320 : Screen.width
+    height: !phoneEdition ? 640 : Screen.height
 
     title: qsTr("Chicks-chicks")
 

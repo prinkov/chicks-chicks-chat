@@ -52,7 +52,7 @@ Rectangle{
             if(value == "-1")
                 var error = rootWindow.createError("Ошибка", "К сожалению файл не загружен, попробуйте еще раз")
             else
-                Client.post('<a href=\"' + value+ '\" >Файл</a>', qsTr(User.nickname), User.roomId)
+                Client.post('<a href=\"' + value+ '\">Файл</a>', qsTr(User.nickname), User.roomId)
             chat.fileLoad.visible = false
         }
     }

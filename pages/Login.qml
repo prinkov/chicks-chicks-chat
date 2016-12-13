@@ -135,15 +135,15 @@ Item {
         running: false
         repeat: false
         interval: 15000
-        onTriggered: {
-            connectError()
-        }
     }
 
     function login(login, password) {
         load = rootWindow.loading()
-        timeout.start()
         var request = new XMLHttpRequest()
+        timeout.triggered.connect(function(){
+            request.abort()
+        })
+        timeout.start()
 
         request.open("POST", System.server + "/login.php")
         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -155,10 +155,14 @@ Item {
                         loginResolve(login)
                     else if(request.responseText == "-1")
                        loginError()
+                    else
+                        serverError()
                     timeout.stop()
                 }
-                else
+                else {
+                    timeout.stop()
                     connectError()
+                }
             }
         }
         request.send(param)
@@ -175,6 +179,12 @@ Item {
         msgErr = rootWindow.createError("Ошибка", "Неверный логин/пароль")
         load.stop()
     }
+
+    function serverError(error) {
+        msgErr = rootWindow.createError("Неполадки на сервере", "Пожалуйста, попробуйте ещё раз")
+        load.stop()
+    }
+
 
 
     function connectError(error) {
