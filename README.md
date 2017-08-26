@@ -1,4 +1,5 @@
 # Chicks-Chicks Chat
+Multi-room chat with the registration and transfer of files, designed for group communication
 
 Built with:
 -Server side: php, mysql
