@@ -1,6 +1,8 @@
 # Chicks-Chicks Chat
 Multi-room chat with the registration and transfer of files, designed for group communication
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #1](https://lh3.googleusercontent.com/jXAvrp2CoMpZZ9tJjLPTmsSA5-OUxhP7j6lRfsDwoNXLR0Ff_g-3OCXYCQuaItmRMNM=w1181-h594-rw)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #2](https://lh3.googleusercontent.com/ad18x2YfD5paGMpssN-Cxh63DcAWB8mf651GRu6tGzK_6SNEBSeD0rGi3NCg3lo2Wtzh=w1181-h594-rw)
+
 Built with:
 -Server side: php, mysql
 -Client side: qml/qt, js
@@ -11,6 +13,9 @@ Get the code:
     git clone https://github.com/prinkov/chicks-chicks-chat.git
 
 You may compile for any platform with [qt]("https://www.qt.io/download/")
+
+# Features
+- Implemented a primitive file manager on (!pure) qml
 
 # Lincense
 
