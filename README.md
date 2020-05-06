@@ -1,7 +1,7 @@
 # Chicks-Chicks Chat
 Multi-room chat with the registration and transfer of files, designed for group communication
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #1](https://i.ibb.co/4FyS60k/2020-05-06-13-05-29.png =250px)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #2](https://i.ibb.co/DRwZbPX/2020-05-06-13-05-51.png =250px)
+<img src="https://i.ibb.co/4FyS60k/2020-05-06-13-05-29.png" style="margin-right: 10px" width="18%">
 
 Built with:
 -Server side: any scripts, your may see example at backend folder
