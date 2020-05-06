@@ -62,25 +62,23 @@ function update(firstId, room) {
     var param = "firstid="+firstId + "&room=" + room
     request.onreadystatechange = function () {
         if (request.readyState === XMLHttpRequest.DONE) {
-            if (request.status === 200) {
-                if(request.responseText != "-1") {
-                    response = request.responseText
-                    var t = JSON.parse(response)
-                        if(t) {
-                            if(parseInt(t[t.length-1].id) < parseInt(chat.mod.get(0).id)) {
-                                for(var i = t.length-1; i >=0 ; i--) {
-                                    if(parseInt(t[i].id) < parseInt(chat.mod.get(0).id))
-                                        chat.mod.insert(0,{"id":t[i].id, "text1": t[i].message, "author" : t[i].author, "time":t[i].date})
-                                }
-                            }
+            if (request.status === 200 && request.responseText != "-1") {
+                response = request.responseText
+                var t = JSON.parse(response)
+                    if (!t) {
+                        return;
+                    }
+                    if (parseInt(t[t.length-1].id) < parseInt(chat.mod.get(0).id)) {
+                        for (var i = t.length-1; i >=0 ; i--) {
+                            if (parseInt(t[i].id) < parseInt(chat.mod.get(0).id))
+                                chat.mod.insert(0,{"id":t[i].id, "text1": t[i].message, "author" : t[i].author, "time":t[i].date})
                         }
-                } else {console.log("empty")}
-            }
+                    }
+                }
         loadMsg.visible = false
         }
     }
     request.send(param)
-
 }
 
 function getRooms() {

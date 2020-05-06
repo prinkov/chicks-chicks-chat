@@ -1,7 +1,7 @@
 #include <sender.hpp>
 #include <QDebug>
 
-void Sender::setUrl(QString url){
+void Sender::setUrl(QString url) {
     apiUrl = url;
 }
 
@@ -10,15 +10,12 @@ void Sender::sendImage(QString pathImage) {
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     QHttpPart imagePart;
 
-    imagePart.setHeader(
-                QNetworkRequest::ContentTypeHeader, QVariant("image/jpeg")
-                );
+    imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/jpeg"));
 
     imagePart.setHeader(
                 QNetworkRequest::ContentDispositionHeader,
-                QVariant("form-data; name=\"file\"; filename=\""+
-                          QFile(pathImage).fileName().toHtmlEscaped()+"\""
-                ));
+                QVariant("form-data; name=\"file\"; filename=\"" + QFile(pathImage).fileName().toHtmlEscaped() + "\"")
+                );
 
     pathImage = QUrl(pathImage).toLocalFile();
     QFile *file = new QFile(pathImage);

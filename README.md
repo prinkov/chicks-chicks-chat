@@ -1,13 +1,15 @@
 # Chicks-Chicks Chat
 Multi-room chat with the registration and transfer of files, designed for group communication
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #1](https://lh3.googleusercontent.com/jXAvrp2CoMpZZ9tJjLPTmsSA5-OUxhP7j6lRfsDwoNXLR0Ff_g-3OCXYCQuaItmRMNM=w1181-h594-rw)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #2](https://lh3.googleusercontent.com/ad18x2YfD5paGMpssN-Cxh63DcAWB8mf651GRu6tGzK_6SNEBSeD0rGi3NCg3lo2Wtzh=w1181-h594-rw)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #1](https://i.ibb.co/4FyS60k/2020-05-06-13-05-29.png)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #2](https://i.ibb.co/DRwZbPX/2020-05-06-13-05-51.png)
 
 Built with:
--Server side: php, mysql
+-Server side: any scripts, your may see example at backend folder
 -Client side: qml/qt, js
 
-If you just want to see it running, visit: https://play.google.com/store/apps/details?id=xyz.prinkov.chat
+(Deprecated) If you just want to see it running, visit: https://play.google.com/store/apps/details?id=xyz.prinkov.chat
+ I removing app from google play, because is just example app for fun  and I stopped support backend script
+
 
 Get the code:
     git clone https://github.com/prinkov/chicks-chicks-chat.git
