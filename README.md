@@ -1,14 +1,14 @@
 # Chicks-Chicks Chat
 Multi-room chat with the registration and transfer of files, designed for group communication
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #1](https://i.ibb.co/4FyS60k/2020-05-06-13-05-29.png)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #2](https://i.ibb.co/DRwZbPX/2020-05-06-13-05-51.png)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #1](https://i.ibb.co/4FyS60k/2020-05-06-13-05-29.png =250px)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Screen #2](https://i.ibb.co/DRwZbPX/2020-05-06-13-05-51.png =250px)
 
 Built with:
 -Server side: any scripts, your may see example at backend folder
 -Client side: qml/qt, js
 
 (Deprecated) If you just want to see it running, visit: https://play.google.com/store/apps/details?id=xyz.prinkov.chat
- I removing app from google play, because is just example app for fun  and I stopped support backend script
+ // I removing app from google play, because is just example app for fun  and I stopped support backend script
 
 
 Get the code:
@@ -16,7 +16,7 @@ Get the code:
 
 You may compile for any platform with [qt]("https://www.qt.io/download/")
 
-# Features
+# Technical Features
 - Implemented a primitive file manager on (!pure) qml
 
 # Lincense
